@@ -65,30 +65,43 @@ void Game::startGame() {
   }
 }
 void Game::combat() {
-    std::cout << "\033[1;33mYou encounter an enemy!\033[0m.\n";
+    std::cout << "\033[1;33mYou encounter enemies!\033[0m.\n";
 
-    while (player->isAlive() && enemy->isAlive()) {
-        player->attack(*enemies);
+    while (player->isAlive() && !enemies.empty()) {
+        // Gracz atakuje pierwszego żywego przeciwnika
+        for (auto it = enemies.begin(); it != enemies.end(); ++it) {
+            if ((*it)->isAlive()) {
+                player->attack(**it);
 
-        if (enemy->isAlive()) {
-            enemy->attack(*player);
-            if (!player->isAlive()) {
-                std::cout << "\033[1;31mYou have been defeated!\033[0m\n";
-                sleep(1700);
-                delete player;
-                player = nullptr;
-                return;
+                // Usuń martwego przeciwnika
+                if (!(*it)->isAlive()) {
+                    std::cout << "\033[1;32mYou have defeated " << (*it)->getName() << "!\033[0m\n\n";
+                    delete *it;
+                    enemies.erase(it);
+                }
+                break;
             }
-        } else {
-            std::cout << "\033[1;32mYou have defeated the enemy!\033[0m\n\n";
-            sleep(1700);
+        }
+
+        // Wszyscy żywi przeciwnicy atakują gracza
+        for (Mob* enemy : enemies) {
+            if (enemy->isAlive() && player->isAlive()) {
+                enemy->attack(*player);
+                if (!player->isAlive()) {
+                    std::cout << "\033[1;31mYou have been defeated!\033[0m\n";
+                    sleep(1700);
+                    return;
+                }
+            }
         }
 
         sleep(1700);
     }
 
-    delete enemy;
-    enemy = nullptr;
+    if (enemies.empty()) {
+        std::cout << "\033[1;32mYou have defeated all enemies!\033[0m\n\n";
+        sleep(1700);
+    }
 }
 void Game::event() { 
   if(player->isAlive() && running)
