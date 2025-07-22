@@ -140,9 +140,6 @@ void Game::combat(int enemiesCount) {
                   << "!\033[0m\n";
         player->addItemToInventory(rewardItem);
       }
-
-      std::cout << "*Press any button*\n";
-      getChar();
     }
   }
 }
@@ -173,18 +170,17 @@ void Game::event(std::string eventType) {
     }
 
   } else if (player->isAlive() && eventType == "treasure") {
-    std::cout << "You found treasure!\n";
     initRandom();
     Items itemDatabase;
     const auto &availableItems = itemDatabase.getItemMap();
     if (!availableItems.empty()) {
       int randomIndex = std::rand() % availableItems.size();
       Item *treasureItem = new Item(*availableItems[randomIndex]);
-      std::cout << "You also found: " << treasureItem->name << "!\n";
+      std::cout << "You found: " << treasureItem->name << " !\n";
       player->addItemToInventory(treasureItem);
     }
 
-    sleep(1200);
+    getChar();
   }
 }
 void Game::endGame() {

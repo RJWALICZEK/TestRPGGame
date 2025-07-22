@@ -1,6 +1,7 @@
 #include "mob.h"
 #include "items.h"
 #include <iostream>
+#include "functions.h"
 
 Mob::Mob(std::string name, int hp, int dmg, int ap, int exp, int lvl)
     : name(name), hp(hp), dmg(dmg), ap(ap), exp(exp), lvl(lvl) {
@@ -34,9 +35,13 @@ void Mob::attack(Mob &target) {
 }
 
 void Mob::getInfo() {
-  std::cout << "Name: \033[1;31m" << this->name << "\033[0m \tLvl: \033[1;31m"
-            << this->lvl << "\033[0m \n"
-            << "HP: \033[1;32m" << this->hp << "\033[0m \n"
+  std::cout << "Name: \033[1;31m" << this->name << "\033[0m \tLvl: \033[1;31m" << this->lvl << "\033[0m\t";
+    if (equipedWeapon)
+      std::cout << "Weapon: \033[1;31m" << equipedWeapon->name << "\033[0m\t";
+    else
+      std::cout << "\n";
+   
+           std::cout << "HP: \033[1;32m" << this->hp << "\033[0m \n"
             << "Damage: \033[1;33m" << this->dmg << "\033[0m.\n"
             << "Armor: " << this->ap << std::endl;
 }
@@ -111,12 +116,15 @@ void Mob::usePotion(Item *potion) {
   }
   std::cout << "Used potion : " << potion->name << " **Press any button** "
             << std::endl;
+  removeItemFromInventory(potion->id);
 }
 
 void Mob::addItemToInventory(Item *item) {
   if (item != nullptr) {
     playerInventory.push_back(item);
-    std::cout << "Added " << item->name << " to inventory!\n";
+    std::cout << "Added " << item->name
+              << " to inventory! **Press any button**\n";
+    getChar();
   }
 }
 
