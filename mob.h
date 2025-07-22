@@ -1,6 +1,7 @@
 #pragma once
 #include "items.h"
 #include <string>
+#include <vector>
 
 
 class Mob {
@@ -12,6 +13,7 @@ private:
   int exp;
   int lvl;
   Items *inventory;
+  std::vector<Item*> playerInventory;
 
   Item *equipedWeapon;
   Item *equipedArmor;
@@ -31,4 +33,8 @@ public:
   void equipWeapon(Item *weapon);
   void equipArmor(Item *armor);
   void usePotion(Item *potion);
+  void addItemToInventory(Item* item);
+  void removeItemFromInventory(int itemId);
+  void showPlayerInventory();
+  Item* getItemFromInventory(int itemId);
 };

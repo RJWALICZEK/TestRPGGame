@@ -3,25 +3,35 @@
 
 Items::Items() {
   //weapons 
-  Item* sword_cs = new Item{"Club", 1, "A rooten wood club", 5, 0, 0, 0};
-  Item* sword_is = new Item{"Iron Sword", 2, "A rusty iron sword", 10, 0, 0, 0};
-  Item* sword_sa = new Item{"Steel Axe", 3, "A sharp steel axe", 15, 0, 0, 0};
-  Item* sword_ms = new Item{"MIthril Sword", 4, "A magical powerfull sword", 20, 5, 0, 0};
+  Item* weapon_club = new Item{"Club", 1, "A rooten wood club", 5, 0, 0, 0};
+  Item* weapon_sword_iron = new Item{"Iron Sword", 2, "A rusty iron sword", 10, 0, 0, 0};
+  Item* weapon_axe_steel = new Item{"Steel Axe", 3, "A sharp steel axe", 15, 0, 0, 0};
+  Item* weapon_sword_mithril = new Item{"MIthril Sword", 4, "A magical powerfull sword", 20, 5, 0, 0};
+  Item* weapon_dagger_iron = new Item{"Iron dagger", 5, "A short rusty blade", 5, 0, 0, 0};
+  Item* weapon_mace = new Item{"Heavy Mace", 6, "Heavy mace , good for blow enemies head", 5, 0, 0, 0};
+  Item* weapon_staff = new Item{"Long staff", 7, "Long piece of wooden stick", 5, 0, 0, 0};
+  Item* weapon_pickaxe = new Item{"Heavy pickaxe", 8, "Better use like a tool, not weapon", 5, 0, 0, 0};
   //armors
-  Item* armor_la = new Item{"Leather Armor", 5, "A cheap leather armor", 0, 5, 0, 0};
-  Item* armor_ma = new Item{"Mail Armor", 6, "A medium mail armor", 0, 10, 0, 0};
-  Item* armor_pa = new Item{"Plate Armor", 7, "A heavy plate armor", 0, 15, 0, 0};
+  Item* armor_rags = new Item{"Rags", 9, "Dirty thick material shirt", 0, 5, 0, 0};
+  Item* armor_la = new Item{"Leather Armor", 10, "A cheap leather armor", 0, 5, 0, 0};
+  Item* armor_ma = new Item{"Mail Armor", 11, "A medium mail armor", 0, 10, 0, 0};
+  Item* armor_pa = new Item{"Plate Armor", 12, "A heavy plate armor", 0, 15, 0, 0};
   //potions
-  Item* potion_hp_s = new Item{"Small Hp Potion", 8, "A small hp potion", 0, 0, 20, 0};
-  Item* potion_hp_m = new Item{"Medium Hp Potion", 9, "A medium hp potion", 0, 0, 60, 0};
-  Item* potion_hp_l = new Item{"Large Hp Potion", 10, "A large hp potion", 0, 0, 100, 0};
-  Item* potion_lvlUp = new Item{"Lvl Up Potion", 11, "A potion that levels you up", 0, 0, 0, 1};
+  Item* potion_hp_s = new Item{"Small Hp Potion", 13, "A small hp potion", 0, 0, 20, 0};
+  Item* potion_hp_m = new Item{"Medium Hp Potion", 14, "A medium hp potion", 0, 0, 60, 0};
+  Item* potion_hp_l = new Item{"Large Hp Potion", 15, "A large hp potion", 0, 0, 100, 0};
+  Item* potion_lvlUp = new Item{"Lvl Up Potion", 16, "A potion that levels you up", 0, 0, 0, 1};
 
   //intems init
-  addItem(sword_cs);
-  addItem(sword_is);
-  addItem(sword_sa);
-  addItem(sword_ms);
+  addItem(weapon_club);
+  addItem(weapon_sword_iron);
+  addItem(weapon_axe_steel);
+  addItem(weapon_sword_mithril);
+  addItem(weapon_dagger_iron);
+  addItem(weapon_mace);
+  addItem(weapon_staff);
+  addItem(weapon_pickaxe);
+  addItem(armor_rags);
   addItem(armor_la);
   addItem(armor_ma);
   addItem(armor_pa);

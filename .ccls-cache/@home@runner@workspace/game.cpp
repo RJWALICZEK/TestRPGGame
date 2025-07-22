@@ -88,7 +88,7 @@ void Game::combat(int enemiesCount) {
   }
 
   //--------------------
-  
+
   while (player->isAlive() && !enemies.empty()) {
     // Gracz atakuje pierwszego żywego przeciwnika
     for (auto it = enemies.begin(); it != enemies.end(); ++it) {
@@ -125,7 +125,25 @@ void Game::combat(int enemiesCount) {
   if (enemies.empty()) {
     std::cout << "\033[1;32mYou have defeated all enemies! *Press any "
                  "button*\033[0m\n\n";
-    getChar();
+    if (enemies.empty()) {
+      std::cout << "\033[1;32mYou have defeated all enemies!\033[0m\n";
+
+      // Nagroda - losowy przedmiot
+      initRandom();
+      Items itemDatabase;
+      const auto &availableItems = itemDatabase.getItemMap();
+      if (!availableItems.empty()) {
+        int randomIndex = std::rand() % availableItems.size();
+        Item *rewardItem =
+            new Item(*availableItems[randomIndex]); // Kopia przedmiotu
+        std::cout << "\033[1;33mYou found: " << rewardItem->name
+                  << "!\033[0m\n";
+        player->addItemToInventory(rewardItem);
+      }
+
+      std::cout << "*Press any button*\n";
+      getChar();
+    }
   }
 }
 void Game::event(std::string eventType) {
@@ -133,7 +151,7 @@ void Game::event(std::string eventType) {
     initRandom();
     int enemiesCount = getRandomEnemyCount();
     char input;
-    
+
     enemiesCount > 1
         ? std::cout << "\033[1;31mYou encounter a group of enemies!\033[0m.\n"
         : std::cout << "\033[1;31mYou encounter an enemy!\033[0m.\n";
@@ -141,23 +159,31 @@ void Game::event(std::string eventType) {
     std::cout << "What action will you take ?\n fight (f) run (r)\n ";
     input = getChar();
     switch (input) {
-      case 'f' : {
-        combat(enemiesCount);
-        break;
-      }
-      case 'r' : {
-        std::cout << "You ran away! *Press any button*\n";
-        getChar();
-         map->setTrueEnemyStatus();
-        return;
-        break;
-      }
+    case 'f': {
+      combat(enemiesCount);
+      break;
+    }
+    case 'r': {
+      std::cout << "You ran away! *Press any button*\n";
+      getChar();
+      map->setTrueEnemyStatus();
+      return;
+      break;
+    }
     }
 
-    
   } else if (player->isAlive() && eventType == "treasure") {
     std::cout << "You found treasure!\n";
-    player->setHp(100);
+    initRandom();
+    Items itemDatabase;
+    const auto &availableItems = itemDatabase.getItemMap();
+    if (!availableItems.empty()) {
+      int randomIndex = std::rand() % availableItems.size();
+      Item *treasureItem = new Item(*availableItems[randomIndex]);
+      std::cout << "You also found: " << treasureItem->name << "!\n";
+      player->addItemToInventory(treasureItem);
+    }
+
     sleep(1200);
   }
 }
