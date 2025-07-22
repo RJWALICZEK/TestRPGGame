@@ -37,12 +37,16 @@ void Mob::attack(Mob &target) {
 void Mob::getInfo() {
   std::cout << "Name: \033[1;31m" << this->name << "\033[0m \tLvl: \033[1;31m" << this->lvl << "\033[0m\t";
     if (equipedWeapon)
-      std::cout << "Weapon: \033[1;31m" << equipedWeapon->name << "\033[0m\t";
+      std::cout << "\tWeapon: \033[1;31m" << equipedWeapon->name << "\033[0m\t\n";
     else
       std::cout << "\n";
    
-           std::cout << "HP: \033[1;32m" << this->hp << "\033[0m \n"
-            << "Damage: \033[1;33m" << this->dmg << "\033[0m.\n"
+           std::cout << "HP: \033[1;32m" << this->hp << "\033[0m";
+             if (equipedArmor)
+               std::cout << "\t\t\t\t\tArmor: \033[1;31m" << equipedArmor->name << "\033[0m\t\n";
+             else
+               std::cout << "\n";
+           std::cout << "Damage: \033[1;33m" << this->dmg << "\033[0m.\n"
             << "Armor: " << this->ap << std::endl;
 }
 void Mob::lvlUp() {

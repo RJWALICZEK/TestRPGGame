@@ -40,13 +40,39 @@ void Game::startGame() {
     delete player;
   }
   player = new Mob(name, 100, 30, 5, 0, 1);
+
+  //------------------------------------------------------
+  // Add starting equipment to player inventory
+  Items itemDatabase;
+  const auto &availableItems = itemDatabase.getItemMap();
+
+  // Add Club (weapon) - ID 1
+  for (auto item : availableItems) {
+    if (item->id == 1) { // Club
+      Item *startingWeapon = new Item(*item);
+      player->addItemToInventory(startingWeapon);
+      break;
+    }
+  }
+
+  // Add Rags (armor) - ID 9
+  for (auto item : availableItems) {
+    if (item->id == 9) { // Rags
+      Item *startingArmor = new Item(*item);
+      player->addItemToInventory(startingArmor);
+      break;
+    }
+  }
+
+//---------------------------------------------------------
   (void)system("clear");
 
   while (player->isAlive() && inGame) {
     if (map) {
       delete map;
     }
-    map = new GameMap(this);
+    map = new GameMap(this, 0);
+    map->loadMapById(0);
 
     char input;
 
@@ -121,10 +147,6 @@ void Game::combat(int enemiesCount) {
       }
     }
   }
-
-  if (enemies.empty()) {
-    std::cout << "\033[1;32mYou have defeated all enemies! *Press any "
-                 "button*\033[0m\n\n";
     if (enemies.empty()) {
       std::cout << "\033[1;32mYou have defeated all enemies!\033[0m\n";
 
@@ -142,7 +164,6 @@ void Game::combat(int enemiesCount) {
       }
     }
   }
-}
 void Game::event(std::string eventType) {
   if (player->isAlive() && running && eventType == "combat") {
     initRandom();
