@@ -6,8 +6,8 @@
 
 
 GameMap::GameMap(Game* game, int startId) : game(game), playerX(1), playerY(1), id(startId) {
-    loadMapById(id);
     flagEnemyStatus = true;
+    loadMapById(id);
 }
 
 void GameMap::displayMap() {
@@ -110,9 +110,28 @@ void GameMap::setTrueEnemyStatus() {
 
 void GameMap::loadMapById(int newId) {
     id = newId;
-    const MapInfo& map = gameMaps[id];
-    grid = map.grid;
-    playerX = 1;
-    playerY = 1;
-    grid[playerY][playerX] = 'P';
+    if (newId >= 0 && newId < gameMaps.size()) {
+        const MapInfo& map = gameMaps[id];
+        grid = map.grid;
+        
+        // Find a suitable starting position (first empty spot)
+        bool placed = false;
+        for (int y = 1; y < grid.size() - 1 && !placed; y++) {
+            for (int x = 1; x < grid[y].size() - 1 && !placed; x++) {
+                if (grid[y][x] == '.' || grid[y][x] == 'X') {
+                    playerX = x;
+                    playerY = y;
+                    grid[playerY][playerX] = 'P';
+                    placed = true;
+                }
+            }
+        }
+        
+        // Fallback to (1,1) if no suitable position found
+        if (!placed) {
+            playerX = 1;
+            playerY = 1;
+            grid[playerY][playerX] = 'P';
+        }
+    }
 }
