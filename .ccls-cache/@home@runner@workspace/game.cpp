@@ -67,36 +67,33 @@ void Game::startGame() {
 //---------------------------------------------------------
   (void)system("clear");
 
-  while (player->isAlive() && inGame) {
-    if (map) {
-      delete map;
-    }
-    map = new GameMap(this, 0);
-    map->loadMapById(0);
+  // Create map once
+  if (map) {
+    delete map;
+  }
+  map = new GameMap(this, 0);
 
+  while (player->isAlive() && inGame) {
     char input;
 
-    while (player->isAlive()) {
-      player->getInfo();
-      map->displayMap();
-      std::cout << "Move (w/a/s/d) Inventory (i) Quit (q)\n";
-      input = getChar();
+    player->getInfo();
+    map->displayMap();
+    std::cout << "Move (w/a/s/d) Inventory (i) Quit (q)\n";
+    input = getChar();
 
-      if (input == 'q') {
-        inGame = false;
-        std::cout << "Exiting to main menu... *Press any button*\n";
-        getChar();
-        (void)system("clear");
-        break; // Exit to main menu
-      } else if (input == 'i') {
-        player->getItems();
-        getChar();
-        (void)system("clear");
-      }
-
+    if (input == 'q') {
+      inGame = false;
+      std::cout << "Exiting to main menu... *Press any button*\n";
+      getChar();
+      (void)system("clear");
+      break; // Exit to main menu
+    } else if (input == 'i') {
+      player->getItems();
+      getChar();
+      (void)system("clear");
+    } else {
       map->movePlayer(input);
-
-      (void)system("clear"); // Linux
+      (void)system("clear");
     }
   }
   if (!player->isAlive() && !running) {
