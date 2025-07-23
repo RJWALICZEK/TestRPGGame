@@ -32,6 +32,7 @@ Items::Items() {
   addItem(weapon_staff);
   addItem(weapon_pickaxe);
   addItem(armor_rags);
+  
   addItem(armor_la);
   addItem(armor_ma);
   addItem(armor_pa);

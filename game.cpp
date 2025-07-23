@@ -8,8 +8,25 @@
 #include <iostream>
 #include <string>
 
+// konstruktor i destruktor
 Game::Game(bool running) : player(nullptr), enemy(nullptr), running(running) {}
+Game::~Game() {
+  if (player) {
+    delete player;
+  }
+  for (Mob *enemy : enemies) {
+    delete enemy;
+  }
+  if (enemy) {
+    delete enemy;
+  }
+  enemies.clear();
+  if (map) {
+    delete map;
+  }
+}
 
+//------------------ glowna petla gry-------------------------
 void Game::gameLoop() {
   while (running) {
     std::cout << "\n**Welcome to the game!**\n"
@@ -31,7 +48,7 @@ void Game::gameLoop() {
     }
   }
 }
-
+// wlaczenie gry
 void Game::startGame() {
   std::cout << "Enter yout character name : ";
   std::string name;
@@ -42,7 +59,7 @@ void Game::startGame() {
   player = new Mob(name, 100, 30, 5, 0, 1);
 
   //------------------------------------------------------
-  // Add starting equipment to player inventory
+  // dodanie startowych przedmiotow
   Items itemDatabase;
   const auto &availableItems = itemDatabase.getItemMap();
 
@@ -64,19 +81,22 @@ void Game::startGame() {
     }
   }
 
-//---------------------------------------------------------
-  (void)system("clear");
+  //---------------------------------------------------------
+ // (void)system("clear");
+  std::cout << "[DEBUG] Start gry - wchodzę do pętli startowej\n";
 
-  // Create map once
+  // Inicjalizacja mapy
   if (map) {
     delete map;
   }
-  map = new GameMap(this, 0);
+  map = new GameMap(this);
 
   while (player->isAlive() && inGame) {
     char input;
-
+  std::cout << "[DEBUG] Wchodzę do pętli gry\n";
+    // Wyświetlanie informacji o graczu, sterowaniu i wyswietlanie mapy
     player->getInfo();
+    std::cout << "[DEBUG] Wyświetlenie informacji o graczu\n";
     map->displayMap();
     std::cout << "Move (w/a/s/d) Inventory (i) Quit (q)\n";
     input = getChar();
@@ -102,6 +122,8 @@ void Game::startGame() {
     sleep(1200);
   }
 }
+//------------------ funkcje wydazen w grze -------------------------
+// walka
 void Game::combat(int enemiesCount) {
   // SPAWN PRZECIWNIKOW
   for (int i = 0; i < enemiesCount; i++) {
@@ -144,23 +166,23 @@ void Game::combat(int enemiesCount) {
       }
     }
   }
-    if (enemies.empty()) {
-      std::cout << "\033[1;32mYou have defeated all enemies!\033[0m\n";
+  if (enemies.empty()) {
+    std::cout << "\033[1;32mYou have defeated all enemies!\033[0m\n";
 
-      // Nagroda - losowy przedmiot
-      initRandom();
-      Items itemDatabase;
-      const auto &availableItems = itemDatabase.getItemMap();
-      if (!availableItems.empty()) {
-        int randomIndex = std::rand() % availableItems.size();
-        Item *rewardItem =
-            new Item(*availableItems[randomIndex]); // Kopia przedmiotu
-        std::cout << "\033[1;33mYou found: " << rewardItem->name
-                  << "!\033[0m\n";
-        player->addItemToInventory(rewardItem);
-      }
+    // Nagroda - losowy przedmiot
+    initRandom();
+    Items itemDatabase;
+    const auto &availableItems = itemDatabase.getItemMap();
+    if (!availableItems.empty()) {
+      int randomIndex = std::rand() % availableItems.size();
+      Item *rewardItem =
+          new Item(*availableItems[randomIndex]); // Kopia przedmiotu
+      std::cout << "\033[1;33mYou found: " << rewardItem->name << "!\033[0m\n";
+      player->addItemToInventory(rewardItem);
     }
   }
+}
+// obsluga wydazen
 void Game::event(std::string eventType) {
   if (player->isAlive() && running && eventType == "combat") {
     initRandom();
@@ -201,24 +223,9 @@ void Game::event(std::string eventType) {
     getChar();
   }
 }
+//zakonczenie gry
 void Game::endGame() {
   ;
   delete player;
   player = nullptr;
-}
-
-Game::~Game() {
-  if (player) {
-    delete player;
-  }
-  for (Mob *enemy : enemies) {
-    delete enemy;
-  }
-  if (enemy) {
-    delete enemy;
-  }
-  enemies.clear();
-  if (map) {
-    delete map;
-  }
 }

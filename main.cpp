@@ -5,11 +5,12 @@
 #include <iostream>
 
 int main() { 
- 
+
 Game *game = new Game(true);
   game->gameLoop();
   delete game;
 
+  
 
  /* Items inventory;
   inventory.listItems();
