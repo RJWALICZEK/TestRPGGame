@@ -52,7 +52,6 @@ int Mob::getHp() const { return this->hp; }
 void Mob::setHp(int value) { this->hp += value; }
 // Metoda do wyświetlania informacji o Mob'ie
 void Mob::getInfo() {
-  std::cout << "[DEBUG] getInfo() wywołane\n";
   std::cout << "Name: \033[1;31m" << this->name << "\033[0m \tLvl: \033[1;31m" << this->lvl << "\033[0m\t";
     if (equipedWeapon)
       std::cout << "\tWeapon: \033[1;31m" << equipedWeapon->name << "\033[0m\t\n";

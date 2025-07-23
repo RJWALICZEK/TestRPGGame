@@ -83,7 +83,6 @@ void Game::startGame() {
 
   //---------------------------------------------------------
  // (void)system("clear");
-  std::cout << "[DEBUG] Start gry - wchodzę do pętli startowej\n";
 
   // Inicjalizacja mapy
   if (map) {
@@ -93,10 +92,8 @@ void Game::startGame() {
 
   while (player->isAlive() && inGame) {
     char input;
-  std::cout << "[DEBUG] Wchodzę do pętli gry\n";
     // Wyświetlanie informacji o graczu, sterowaniu i wyswietlanie mapy
     player->getInfo();
-    std::cout << "[DEBUG] Wyświetlenie informacji o graczu\n";
     map->displayMap();
     std::cout << "Move (w/a/s/d) Inventory (i) Quit (q)\n";
     input = getChar();

@@ -4,7 +4,6 @@
 
 //----------------------konstruktor i inicjalizacja mapy------------------------
 GameMap::GameMap(Game *game) : game(game), playerX(3), playerY(8) {
-  std::cout << "[DEBUG] konstruktir gamemap wywołane\n";
   grid = {
   
       {'T', '~', '~', '~', '~', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T',
@@ -75,7 +74,6 @@ GameMap::GameMap(Game *game) : game(game), playerX(2), playerY(1){
 
 //wyswietlanie mapy
 void GameMap::displayMap() {
-  std::cout << "[DEBUG] displayMap() wywołane\n";
   for (const auto &row : grid) {
     for (char c : row) {
       switch (c) {
