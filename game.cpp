@@ -8,6 +8,7 @@
 #include <iostream>
 #include <string>
 
+
 Game::Game(bool running) : player(nullptr), enemy(nullptr), running(running) {}
 
 void Game::gameLoop() {
@@ -71,7 +72,7 @@ void Game::startGame() {
   if (map) {
     delete map;
   }
-  map = new GameMap(this, 0);
+  map = new GameMap(this);
 
   while (player->isAlive() && inGame) {
     char input;
