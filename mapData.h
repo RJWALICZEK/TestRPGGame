@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <string>
 
 struct MapInfo {
   std::string name;
