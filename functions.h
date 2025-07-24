@@ -23,6 +23,7 @@ inline char getChar() {
   tcsetattr(STDIN_FILENO, TCSADRAIN, &old); // przywróć stare ustawienia
   return buf;
 }
+
 inline void initRandom() { std::srand(std::time(nullptr)); }
 inline int getRandomEnemyCount() {
   return std::rand() % 3 + 1; // 1,2,3
@@ -33,3 +34,4 @@ inline int getRandomStat() {
 inline int getRandomItem() {
   return std::rand() % 4 + 1; // 1,2,3,4
 }
+

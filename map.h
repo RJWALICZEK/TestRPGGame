@@ -1,6 +1,4 @@
 #pragma once
-#include "map.h"
-
 
 class Game;
 
@@ -14,7 +12,7 @@ class GameMap {
     bool flagEnemyStatus;
 
 public:
-    GameMap(Game* game);
+    GameMap(Game* game, int idMap);
     void displayMap();
     void movePlayer(char direction);
     void removeEnemy(int y, int x);

@@ -18,10 +18,8 @@ public:
   void gameLoop();
   void combat(int enemiesCount);
   void event(std::string eventType);
-  void showMainMenu();
   void startGame();
   void endGame();
-  void kill();
   const std::vector<Mob *> &getEnemies() const { return enemies; }
   ~Game();
 };

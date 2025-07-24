@@ -4,9 +4,8 @@
 #include "functions.h"
 
 Mob::Mob(std::string name, int hp, int dmg, int ap, int exp, int lvl)
-    : name(name), hp(hp), dmg(dmg), ap(ap), exp(exp), lvl(lvl) {
-  inventory = new Items();
-}
+: name(name), hp(hp), dmg(dmg), ap(ap), exp(exp), lvl(lvl),
+  inventory(new Items()), equipedWeapon(nullptr), equipedArmor(nullptr) {}
 
 std::string Mob::getName() const { return this->name; }
 
@@ -35,6 +34,7 @@ void Mob::attack(Mob &target) {
 }
 
 void Mob::getInfo() {
+  std::cout << "[DEBUG] Before getInfo()\n";
   std::cout << "Name: \033[1;31m" << this->name << "\033[0m \tLvl: \033[1;31m" << this->lvl << "\033[0m\t";
     if (equipedWeapon)
       std::cout << "\tWeapon: \033[1;31m" << equipedWeapon->name << "\033[0m\t\n";

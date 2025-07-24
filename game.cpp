@@ -21,6 +21,7 @@ void Game::gameLoop() {
     switch (input) {
     case '1':
       inGame = true;
+      (void)system("clear");
       startGame();
       break;
     case '2':
@@ -28,12 +29,16 @@ void Game::gameLoop() {
       break;
     default: {
       std::cout << "Invalid output, try again. \n";
+      sleep(500);
+      (void)system("clear");
     }
     }
   }
 }
 
 void Game::startGame() {
+  std::cout << "[DEBUG] startGame() started\n";
+
   std::cout << "Enter yout character name : ";
   std::string name;
   std::cin >> name;
@@ -41,7 +46,7 @@ void Game::startGame() {
     delete player;
   }
   player = new Mob(name, 100, 30, 5, 0, 1);
-
+  /*
   //------------------------------------------------------
   // Add starting equipment to player inventory
   Items itemDatabase;
@@ -64,6 +69,8 @@ void Game::startGame() {
       break;
     }
   }
+  std::cout << "[DEBUG] player get items\n";
+*/
 
 //---------------------------------------------------------
   (void)system("clear");
@@ -72,13 +79,22 @@ void Game::startGame() {
   if (map) {
     delete map;
   }
-  map = new GameMap(this);
+  map = new GameMap(this, 1);
+  std::cout << "[DEBUG] initialize gamemap \n";
 
   while (player->isAlive() && inGame) {
     char input;
+    std::cout << "[DEBUG] gameloop started \n";
+    std::cout << "[DEBUG] before playerGetInfo()\n";
 
     player->getInfo();
+    std::cout << "[DEBUG] after playerGetInfo()\n";
+
+    std::cout << "[DEBUG] Before displayMap()\n";
+
     map->displayMap();
+    std::cout << "[DEBUG] after displayMap()\n";
+
     std::cout << "Move (w/a/s/d) Inventory (i) Quit (q)\n";
     input = getChar();
 
@@ -97,6 +113,8 @@ void Game::startGame() {
       (void)system("clear");
     }
   }
+  std::cout << "[DEBUG] Gameloop end\n";
+
   if (!player->isAlive() && !running) {
     std::cout << "Game over!\n";
     getChar();
