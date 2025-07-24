@@ -7,15 +7,21 @@ struct Maps {
   std::string name;
   int playerX;
   int playerY;
+  int escapeIdA;
+  int escapeIdB;
+  int escapeIdC;
+  int escapeIdD;
   std::vector<std::vector<char>> grid;
-Maps(int id_, const std::string &name_, int x, int y, std::vector<std::vector<char>> grid_)
-: id(id_), name(name_), playerX(x), playerY(y), grid(std::move(grid_)) {}
+Maps(int id_, const std::string &name_, int x, int y, int a, int b, int c, int d, std::vector<std::vector<char>> grid_)
+: id(id_), name(name_), playerX(x), playerY(y), escapeIdA(a), escapeIdB(b), escapeIdC(c), grid(std::move(grid_)) {}
 
 };
 
 inline std::vector<Maps> gameMaps = {
     {0,
-     "The Sunken Wilds", 1, 3,
+     "The Sunken Wilds",
+      1, 3,  //wspolzedne
+      1, -1, -1, -1, //wyjscia 
      {{'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T',
        'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T'},
       {'T', '.', '.', '.', '.', '.', '~', '~', '.', '.', '.', '.', '.',
@@ -53,7 +59,9 @@ inline std::vector<Maps> gameMaps = {
       {'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T',
        'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', '#', '#', 'T'}}},
     {1,
-     "Dark Forrest", 2, 4,
+     "Dark Forrest",
+      2, 4, //wspolzedne
+      1, 0, -1, -1, //wyjscia
      {{'T', 'T', 'T', '^', '^', '^', '^', '^', 'T', 'T', 'T', 'T',
        'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T',
        'T', 'T', 'T', 'T', 'T', 'T', '~', '~', '~', '~', '~'},
@@ -127,3 +135,4 @@ inline std::vector<Maps> gameMaps = {
     }
 
 };
+

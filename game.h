@@ -12,6 +12,7 @@ private:
   bool running;
   bool inGame;
   GameMap *map;
+int currentMapId;
 
 public:
   Game(bool running = true);
@@ -20,6 +21,8 @@ public:
   void event(std::string eventType);
   void startGame();
   void endGame();
+  void changeMap(int newMapId);
   const std::vector<Mob *> &getEnemies() const { return enemies; }
+int getMapId() const;  
   ~Game();
 };

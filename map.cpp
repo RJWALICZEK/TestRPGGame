@@ -89,6 +89,42 @@ void GameMap::movePlayer(char direction) {
     sleep(800);
     return;
   }
+  if (targetTile == '>' || targetTile == '<' || targetTile == 'V') {
+    std::cout << "\033[1;33mYou found a door!\033[0m\n";
+    sleep(600);
+
+    int targetMapId = -1;
+    const Maps* currentMap = nullptr;
+
+    for (const auto& m : gameMaps) {
+      if (m.id == game->getMapId()) {
+        currentMap = &m;
+        break;
+      }
+    }
+
+    if (!currentMap) {
+      std::cerr << "[ERROR] Current map not found!\n";
+      return;
+    }
+
+    // Wybierz odpowiedni escapeId
+    switch (targetTile) {
+      case '>': targetMapId = currentMap->escapeIdA; break;
+      case '<': targetMapId = currentMap->escapeIdB; break;
+      case 'V': targetMapId = currentMap->escapeIdC; break;
+      case '^': targetMapId = currentMap->escapeIdD; break;
+    }
+
+    if (targetMapId >= 0) {
+      game->changeMap(targetMapId);
+    } else {
+      std::cout << "This door leads nowhere...\n";
+      sleep(500);
+    }
+
+    return; // koniec wykonania, nie przechodzimy dalej
+  }
 
   // Wydarzenia
   if (targetTile == 'E') {

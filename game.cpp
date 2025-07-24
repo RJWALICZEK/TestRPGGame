@@ -79,7 +79,8 @@ void Game::startGame() {
   if (map) {
     delete map;
   }
-  map = new GameMap(this, 1);
+  currentMapId = 0;
+  map = new GameMap(this, currentMapId);
   std::cout << "[DEBUG] initialize gamemap \n";
 
   while (player->isAlive() && inGame) {
@@ -240,4 +241,15 @@ Game::~Game() {
   if (map) {
     delete map;
   }
+}
+
+void Game::changeMap(int newMapId) {
+  if (map) delete map;
+  currentMapId = newMapId;
+  map = new GameMap(this, newMapId);
+  std::cout << "[DEBUG] Map changed to ID: " << newMapId << "\n";
+}
+
+int Game::getMapId() const {
+  return currentMapId;
 }
