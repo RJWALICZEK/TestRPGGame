@@ -102,8 +102,14 @@ void Mob::getItems() {
 }
 
 void Mob::equipWeapon(Item *weapon) {
+  int oldBoost = 0;
+  if(equipedWeapon)
+  {
+    oldBoost = equipedWeapon->dmgBoost;
+  }
   equipedWeapon = weapon;
   this->dmg += weapon->dmgBoost;
+  this->dmg -= oldBoost;
   std::cout << "Equiped weapon " << weapon->name << " **Press any button** "
             << std::endl;
 }
