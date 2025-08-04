@@ -89,7 +89,7 @@ void GameMap::movePlayer(char direction) {
     sleep(800);
     return;
   }
-  if (targetTile == '>' || targetTile == '<' || targetTile == 'V') {
+  if (targetTile == '>' || targetTile == '<' || targetTile == 'V' || targetTile == '^') {
     std::cout << "\033[1;33mYou found a door!\033[0m\n";
     sleep(600);
 
